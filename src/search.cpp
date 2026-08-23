@@ -13,9 +13,7 @@ namespace {
 
 constexpr int infty=99999999; //
 constexpr int checkmate=999999;
-
 int negamax(Board& board, int depth,int alpha,int beta){
-//most sources use minimax, switch to negamax for single maximization?
 if(depth == 0){
      return evaluate(board);
 }
@@ -33,7 +31,7 @@ return 0;
 int best = -infty;
 for(const auto& m:moves){
     board.makeMove(m);
-    int score= -1*(negamax(board, (depth-1))); //check + -
+    int score= -1*(negamax(board, depth-1, -beta, -alpha)); //check + -
     board.unmakeMove(m);
     if(score>best) {
         best = score;
@@ -69,7 +67,7 @@ Move findBestMove(Board& board, const SearchLimits& limits) {
     for(const auto&m:moves) {
 
         board.makeMove(m);
-        int score= -negamax(board, depth - 1);
+        int score= -negamax(board, depth - 1, -infty, infty);
         board.unmakeMove(m);
         if (score > bestScore) {
             bestScore=score;
