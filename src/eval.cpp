@@ -128,18 +128,73 @@ int material(const Board& board, Color side) {
 
 //each peice's position on board + is it well placed, scale wrt pt value
 int pawnPlacement(const Board& board, Color side) {
+    int total = 0;
+    Bitboard knights = board.pieces(PieceType::PAWN, side);
+    while(knights) {
+        int sq = knights.pop();
+        int idx = sq;
+        if(side==Color::BLACK) {
+            idx = sq ^ 56;
+        }
+        total += PAWN_PST[idx];
+    }
+    return total;
 }
 
 int knightPlacement(const Board& board, Color side) {
+    int total = 0;
+    Bitboard knights = board.pieces(PieceType::KNIGHT, side);
+    while(knights) {
+        int sq = knights.pop();
+        int idx = sq;
+        if(side==Color::BLACK) {
+            idx = sq ^ 56;
+        }
+        total += KNIGHT_PST[idx];
+    }
+    return total;
 }
 
 int bishopPlacement(const Board& board, Color side) {
+    int total = 0;
+    Bitboard knights = board.pieces(PieceType::BISHOP, side);
+    while(knights) {
+        int sq = knights.pop();
+        int idx = sq;
+        if(side==Color::BLACK) {
+            idx = sq ^ 56;
+        }
+        total += BISHOP_PST[idx];
+    }
+    return total;
 }
 
 int rookPlacement(const Board& board, Color side) {
+    int total = 0;
+    Bitboard knights = board.pieces(PieceType::ROOK, side);
+    while(knights) {
+        int sq = knights.pop();
+        int idx = sq;
+        if(side==Color::BLACK) {
+            idx = sq ^ 56;
+        }
+        total += ROOK_PST[idx];
+    }
+    return total;
 }
 
 int queenPlacement(const Board& board, Color side) {
+    int total = 0;
+    Bitboard knights = board.pieces(PieceType::QUEEN, side);
+    while(knights) {
+        int sq = knights.pop();
+        int idx = sq;
+        if(side == Color::BLACK) {
+            idx = sq ^ 56;
+        }
+        total += QUEEN_PST[idx];
+    }
+    return total;
 }
 }
 
