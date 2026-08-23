@@ -31,7 +31,7 @@ void printBoard(const Board& board) {
     index = file + 8 * rank
     */
     std::string black = "\e[37m\e[40m";
-    std::string white = "\e[37m\e[47m";
+    std::string white = "\e[30m\e[47m";
     std::string reset= "\e[0m";
 for(int row = 0; row < 8; row++) {
     for(int col = 0; col < 8; col++) {
