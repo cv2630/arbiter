@@ -4,3 +4,4 @@
 //header file to actually create the running uci loop
  
 void uciLoop();
+void playLoop();

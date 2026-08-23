@@ -1,6 +1,6 @@
 #include "uci.h"
  
 int main() {
-    uciLoop();
+    playLoop();
     return 0;
 }

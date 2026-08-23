@@ -126,3 +126,6 @@ void uciLoop() {
         }
     }
 }
+
+void playLoop() {
+}
