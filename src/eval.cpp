@@ -111,14 +111,27 @@ int KING_ENDGAME_PST[64] = {
     -50,-30,-30,-30,-30,-30,-30,-50
 };
 
+
+//skeleton of fns needed
+//point counter
+int material(const Board& board, Color side) {
+}
+
+//each peice's position on board + is it well placed, scale wrt pt value
+int knightPlacement(const Board& board, Color side) {
+}
 }
 
 int evaluate(const Board& board) {
     Color us = board.sideToMove();
     Color them = ~us;
+    int score = material(board, us)-material(board, them);
 
-    int score = material(board, us) - material(board, them);
-    score += knightPlacement(board, us) - knightPlacement(board, them);
+        score += pawnPlacement(board, us)-pawnPlacement(board, them); //repeat for each
+    score += knightPlacement(board, us)-knightPlacement(board, them); //repeat for each
+    score += bishopPlacement(board, us)-bishopPlacement(board, them); //repeat for each
+    score += rookPlacement(board, us)-rookPlacement(board, them); //repeat for each
+    score += queenPlacement(board, us)-queenPlacement(board, them);
 
     return score;
 }
