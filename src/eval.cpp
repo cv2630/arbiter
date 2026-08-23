@@ -118,7 +118,19 @@ int material(const Board& board, Color side) {
 }
 
 //each peice's position on board + is it well placed, scale wrt pt value
+int pawnPlacement(const Board& board, Color side) {
+}
+
 int knightPlacement(const Board& board, Color side) {
+}
+
+int bishopPlacement(const Board& board, Color side) {
+}
+
+int rookPlacement(const Board& board, Color side) {
+}
+
+int queenPlacement(const Board& board, Color side) {
 }
 }
 
