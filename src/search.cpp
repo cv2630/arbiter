@@ -13,10 +13,32 @@ constexpr int checkmate=999999;
 
 int negamax(Board& board, int depth) {
 //most sources use minimax, switch to negamax for single maximization?
-
+if(depth == 0){
+     return evaluate(board);
 }
 
-} // namespace
+Movelist moves;
+movegen::legalmoves(moves, board);
+if (moves.empty()) {
+    if (board.inCheck()) {
+        return -checkmate - depth;
+    } 
+    else {
+return 0;
+}}
+
+int best = -infty;
+for(const auto& m:moves){
+    board.makeMove(m);
+    int score= -1*(negamax(board, (depth-1))); //check + -
+    board.unmakeMove(m);
+    if (score > best) {
+        best=score;
+    }
+}
+
+return best;
+}} // namespace
 
 Move findBestMove(Board& board, const SearchLimits& limits) {
     Movelist moves;
