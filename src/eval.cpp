@@ -115,6 +115,15 @@ int KING_ENDGAME_PST[64] = {
 //skeleton of fns needed
 //point counter
 int material(const Board& board, Color side) {
+    using enum PieceType;
+    static const PieceType types[] = {PAWN, KNIGHT, BISHOP, ROOK, QUEEN};
+
+    //evaluation part 1
+    int total = 0;
+    for (int i = 0; i < 5; i++) {
+        total+=board.pieces(types[i], side).count()*pieceValue(types[i]);
+    }
+    return total;
 }
 
 //each peice's position on board + is it well placed, scale wrt pt value
