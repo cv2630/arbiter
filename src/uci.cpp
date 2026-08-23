@@ -22,18 +22,49 @@ namespace {
         case Piece::BLACKQUEEN:  return "♛";
         case Piece::BLACKKING:   return "♚";
         default:                 return " ";
-    }
+    } //decide: shld i reverse?
 }
 
 void printBoard(const Board& board) {
+    /*
+    disservin writes pieces w following idx
+    index = file + 8 * rank
+    */
+
+    //google ```echo -e "\e[30;43m This text has a yellow background \e[0m"```
+
     std::string black = "\e[37m\e[40m";
     std::string white = "\e[37m\e[47m";
-    std::string reset= "\033[0m";
+    std::string reset= "\e[0m";
+for(int row = 0; row < 8; row++) {
+    for(int col = 0; col < 8; col++) {
+        int sq = (7-row)*8 +col; //chess.hpp sq idx, rank * 8 + file
+        Piece p= board.at(Square(sq));
 
-}
+        std::string bg;
+        //rank a and file 1 is the dark color BLACK
+        // this corresponds to row = 7, col = 0
+        if ((row + col)%2 == 1) { //0+7
+            bg = black;
+        } 
+        else {
+            bg = white;
+        }
+        std::cout << bg << " " << pieceSymbol(p) << " " << reset;
+    }
+    std::cout << "\n";
+} }
 
 
 }
 
 void uciLoop() {
 }
+
+/*int main()
+{
+    std::cout<<"Hello World";
+    printBoard();
+
+    return 0;
+*/
