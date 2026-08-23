@@ -6,12 +6,15 @@
 
 using namespace chess;
 
+//add in time?
+//lookup for how to record time in terminal
+
 namespace {
 
 constexpr int infty=99999999; //
 constexpr int checkmate=999999;
 
-int negamax(Board& board, int depth) {
+int negamax(Board& board, int depth,int alpha,int beta){
 //most sources use minimax, switch to negamax for single maximization?
 if(depth == 0){
      return evaluate(board);
@@ -32,9 +35,15 @@ for(const auto& m:moves){
     board.makeMove(m);
     int score= -1*(negamax(board, (depth-1))); //check + -
     board.unmakeMove(m);
-    if (score > best) {
-        best=score;
+    if(score>best) {
+        best = score;
     }
+    if(best>alpha) {
+        alpha=best;
+    }
+    if (alpha>=beta) {
+        break;
+} //alpha-beta pruning
 }
 
 return best;
