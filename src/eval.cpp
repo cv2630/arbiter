@@ -12,7 +12,7 @@ constexpr int QUEEN_VAL  = 900;
 
 int pieceValue(PieceType pt) {
     int values[] = {PAWN_VAL, KNIGHT_VAL, BISHOP_VAL, ROOK_VAL, QUEEN_VAL, 0}; //king not caputred
-    return values[pt.internal()];
+    return values[static_cast<int>(pt.internal())];
 }
 
 /* class PieceType {
@@ -115,8 +115,10 @@ int KING_ENDGAME_PST[64] = {
 //skeleton of fns needed
 //point counter
 int material(const Board& board, Color side) {
-    using enum PieceType;
-    static const PieceType types[] = {PAWN, KNIGHT, BISHOP, ROOK, QUEEN};
+    static const PieceType types[] = {
+        PieceType::PAWN, PieceType::KNIGHT, PieceType::BISHOP,
+        PieceType::ROOK, PieceType::QUEEN
+    };
 
     //evaluation part 1
     int total = 0;
@@ -208,6 +210,7 @@ int evaluate(const Board& board) {
     score += bishopPlacement(board, us)-bishopPlacement(board, them); //repeat for each
     score += rookPlacement(board, us)-rookPlacement(board, them); //repeat for each
     score += queenPlacement(board, us)-queenPlacement(board, them);
+    //add king midgame/endgame placement scores after rest is written
 
     return score;
 }
