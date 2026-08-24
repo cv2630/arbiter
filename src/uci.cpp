@@ -68,27 +68,28 @@ void uciLoop() {
         std::string token;
         stream >> token;
 
-        if (token == "uci") {
+        if(token == "uci") {
             std::cout << "id name SimpleChessEngine\n";
             std::cout << "id author Me\n";
             std::cout << "uciok\n";
         } 
-        else if (token == "isready") {
+        else if(token == "isready") {
             std::cout << "readyok\n";
         } 
-        else if (token == "position") {
+        else if(token == "position") {
             std::string subtoken;
             stream >> subtoken;
-            if (subtoken == "startpos") {
+            if(subtoken == "startpos") {
                 board.setFen(constants::STARTPOS);
-                if (stream >> subtoken && subtoken == "moves") {
+                if(stream >> subtoken && subtoken == "moves") {
                     std::string moveStr;
                     while (stream >> moveStr) {
                         chess::Move move = chess::uci::uciToMove(board, moveStr);
                         board.makeMove(move);
                     }
                 }
-            } else if (subtoken == "fen") {
+            } 
+            else if(subtoken == "fen") {
                 std::string fenParts;
                 // Accumulate FEN string (6 fields)
                 std::string fen = "";
@@ -97,7 +98,7 @@ void uciLoop() {
                     fen += subtoken + (i < 5 ? " " : "");
                 }
                 board.setFen(fen);
-                if (stream >> subtoken && subtoken == "moves") {
+                if(stream >> subtoken && subtoken == "moves") {
                     std::string moveStr;
                     while (stream >> moveStr) {
                         chess::Move move = chess::uci::uciToMove(board, moveStr);
@@ -106,7 +107,7 @@ void uciLoop() {
                 }
             }
         } 
-        else if (token == "go") {
+        else if(token == "go") {
             SearchLimits limits;
             std::string sub;
             while (stream >> sub) {
@@ -128,4 +129,53 @@ void uciLoop() {
 }
 
 void playLoop() {
+    Board board;
+    board.setFen(constants::STARTPOS);
+
+    while(true) {
+        printBoard(board);
+
+        Movelist legal;
+        movegen::legalmoves(legal, board);
+
+        if(legal.empty()) {
+            if(board.inCheck()) {
+                std::cout<<(board.sideToMove() == Color::WHITE ? "Black" : "White")
+                    << " wins by checkmate!\n";
+            }
+            else {
+             std::cout << "Draw by stalemate.\n";
+            }
+            break;
+        }
+
+        if(board.sideToMove() == Color::WHITE) {
+            std::cout << "Your move (e.g. e2e4), or 'quit': ";
+            std::string input;
+            if(!(std::cin >> input) || input == "quit"){
+                break;
+            }
+
+            Move chosen= Move::NO_MOVE;
+            for (const auto& m:legal) {
+                if(uci::moveToUci(m) == input) {
+                    chosen = m;
+                    break;
+                }
+            }
+            if(chosen == Move::NO_MOVE) {
+                std::cout<<"Not a legal move, try again.\n";
+                continue;
+            }
+            board.makeMove(chosen);
+        } 
+        else {
+            std::cout<<"Engine thinking...\n";
+            SearchLimits limits;
+            limits.depth=5;
+            Move best = findBestMove(board, limits);
+            std::cout<<"Engine plays: "<<uci::moveToUci(best)<<"\n";
+            board.makeMove(best);
+        }
+    }
 }
