@@ -1,6 +1,6 @@
 # arbiter
 
-This project seeks to create a rudimentary UCI chess engine, based off of the following [chess-library](https://github.com/Disservin/chess-library) using the negamax algorithm with alpha-beta pruning.
+Arbiter is a from-scratch UCI chess engine, based off of the following [chess-library](https://github.com/Disservin/chess-library) using the negamax algorithm with alpha-beta pruning. The engine can be played directly from the terminal, with white being the user and black being the algorithm. The project is intentionally rudimentary, built as a weekend project to understand chess engine fundamentals from first principles.
 
 ## Setup
 
@@ -17,6 +17,8 @@ Now that the ```build``` folder is complete, run the engine using
 ```./engine```
 
 Inputs from the user involve long algebraic notation (e.g. e2e4 or g1f3) taking the "from" square and the "to" square as inputs. The user is white by default, and the game continues until either a checkmate/stalemate is reached or the user enters ```quit``` into the terminal.
+
+![Board Notation](external/chess.webp)
 
 ## Structure
 
