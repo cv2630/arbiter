@@ -20,8 +20,13 @@ Inputs from the user involve long algebraic notation (e.g. e2e4 or g1f3) taking 
 
 ## Structure
 
-[fill in later]
+[]
 
 ## Future Work
-
-[fill in later]
+- **Learned evaluation (NNUE-style):** replace or augment the hand-crafted material + PST evaluation with a small neural network trained ono labeled positions (e.g. Stockfish-generated evaluations or game outcomes from a database like Lichess).
+- **Move ordering (MVV-LVA):** moves are currently searched in the order `legalmoves()` retursn them, so alpha-beta prunes far less than ti could; trying likely-strong moves first (captures ranked by "most valuable victim, least valuable attacker") would cause more cutoffs earlier in the search.
+- **Opening book:** play from a small database of known strong opening lines
+  for the first several moves, rather than searching from move one.
+- **King Midgame/Endgame Strategy:** — `KING_PST`/`KING_ENDGAME_PST` currently exist but aren't wired into `evaluate()` yet; a way to detect midgame vs. endgame needed to choose between them.
+- **Tined Matches:** add a clock feature to add time as a constraint, if desired.
+- **Varying Difficulty:** allow the user to choose from several different ELOs.
